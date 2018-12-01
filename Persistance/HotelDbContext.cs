@@ -9,7 +9,7 @@ namespace coldel.Persistance
     public class HotelDbContext : DbContext, IDesignTimeDbContextFactory<HotelDbContext>
     {
         public HotelDbContext()
-        {            
+        {
         }
 
         public HotelDbContext(DbContextOptions<HotelDbContext> options)
@@ -19,12 +19,16 @@ namespace coldel.Persistance
 
         public DbSet<Room> Rooms { get; set; }
 
+        public DbSet<Client> Clients { get; set; }
+
+        public DbSet<Registration> Registrations { get; set; }
+
         public HotelDbContext CreateDbContext(string[] args)
         {
-             IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory())
+           .AddJsonFile("appsettings.json")
+           .Build();
 
             var builder = new DbContextOptionsBuilder<HotelDbContext>();
 

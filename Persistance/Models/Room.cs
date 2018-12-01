@@ -6,6 +6,6 @@ namespace coldel.Persistance.Models
     {
         public Guid Id { get; set; }
 
-        public int RoomType { get; set; }
+        public RoomType RoomType { get; set; }
     }
 }
