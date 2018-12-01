@@ -1,0 +1,14 @@
+C:\Users\chocolate_one\Documents\Projects\coldel\bin\Debug\netcoreapp2.1\coldel.deps.json
+C:\Users\chocolate_one\Documents\Projects\coldel\bin\Debug\netcoreapp2.1\coldel.runtimeconfig.json
+C:\Users\chocolate_one\Documents\Projects\coldel\bin\Debug\netcoreapp2.1\coldel.runtimeconfig.dev.json
+C:\Users\chocolate_one\Documents\Projects\coldel\bin\Debug\netcoreapp2.1\coldel.dll
+C:\Users\chocolate_one\Documents\Projects\coldel\bin\Debug\netcoreapp2.1\coldel.pdb
+C:\Users\chocolate_one\Documents\Projects\coldel\obj\Debug\netcoreapp2.1\coldel.csprojAssemblyReference.cache
+C:\Users\chocolate_one\Documents\Projects\coldel\obj\Debug\netcoreapp2.1\coldel.csproj.CoreCompileInputs.cache
+C:\Users\chocolate_one\Documents\Projects\coldel\obj\Debug\netcoreapp2.1\coldel.RazorAssemblyInfo.cache
+C:\Users\chocolate_one\Documents\Projects\coldel\obj\Debug\netcoreapp2.1\coldel.RazorAssemblyInfo.cs
+C:\Users\chocolate_one\Documents\Projects\coldel\obj\Debug\netcoreapp2.1\coldel.AssemblyInfoInputs.cache
+C:\Users\chocolate_one\Documents\Projects\coldel\obj\Debug\netcoreapp2.1\coldel.AssemblyInfo.cs
+C:\Users\chocolate_one\Documents\Projects\coldel\obj\Debug\netcoreapp2.1\coldel.RazorTargetAssemblyInfo.cache
+C:\Users\chocolate_one\Documents\Projects\coldel\obj\Debug\netcoreapp2.1\coldel.dll
+C:\Users\chocolate_one\Documents\Projects\coldel\obj\Debug\netcoreapp2.1\coldel.pdb
