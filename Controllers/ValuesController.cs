@@ -12,9 +12,9 @@ namespace coldel.Controllers
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<string> Get()
         {
-            return Ok(new string[] { "value1", "value2" });
+            return "Tu Pidor.";
         }
 
         // GET api/values/5
