@@ -2,7 +2,7 @@ namespace coldel.Persistance.Models
 {
     public enum RoomType
     {
-        Standart,
+        Standart = 1,
         Lux
     }
 }

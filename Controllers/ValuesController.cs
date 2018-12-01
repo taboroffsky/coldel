@@ -2,19 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using coldel.Persistance.Core;
+using coldel.Persistance.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace coldel.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/rooms")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class RoomsControlller : ControllerBase
     {
+        private readonly IHotelRepository _repository;
+
+        public RoomsControlller(IHotelRepository repository)
+        {
+            _repository = repository;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<string> Get()
+        public ActionResult<IEnumerable<Room>> Get()
         {
-            return "Tu Pidor.";
+            var rooms = _repository.GetRooms();
+            return  Ok(rooms);
         }
 
         // GET api/values/5
