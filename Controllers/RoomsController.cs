@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using coldel.Persistance.Core;
-using coldel.Persistance.Models;
+using coldel.Persistance.Models.DTOS;
+using coldel.Resources;
 using Microsoft.AspNetCore.Mvc;
 
 namespace coldel.Controllers
@@ -21,23 +22,20 @@ namespace coldel.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Room>> Get()
+        public ActionResult<IEnumerable<RoomDTO>> Get()
         {
             var rooms = _repository.GetRooms();
             return  Ok(rooms);
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return Ok("val");
-        }
-
         // POST api/values
+        // Returns number of unique pairs combinations (room tuype-capacity) for a specific date.
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<IEnumerable<RoomDTO>> Post([FromBody] GetRoomTypesResource resource)
         {
+            var rooms = _repository.GetRoomTypes(resource);
+
+            return Ok(rooms);
         }
 
         // PUT api/values/5

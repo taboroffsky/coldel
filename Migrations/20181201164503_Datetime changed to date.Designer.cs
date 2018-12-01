@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using coldel.Persistance;
 
 namespace coldel.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181201164503_Datetime changed to date")]
+    partial class Datetimechangedtodate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,13 +40,11 @@ namespace coldel.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CheckInDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CheckInDate");
 
                     b.Property<Guid?>("ClientId");
+
+                    b.Property<int>("NumberOfDays");
 
                     b.Property<Guid?>("RoomId");
 

@@ -53,6 +53,7 @@ namespace coldel
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder.WithOrigins("*"));
             app.UseHttpsRedirection();
             app.UseMvc();
         }
