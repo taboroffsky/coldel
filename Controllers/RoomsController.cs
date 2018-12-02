@@ -20,7 +20,7 @@ namespace coldel.Controllers
             _repository = repository;
         }
 
-        // GET api/values
+        // GET api/rooms
         [HttpGet]
         public ActionResult<IEnumerable<RoomDTO>> Get()
         {
@@ -37,23 +37,5 @@ namespace coldel.Controllers
 
             return Ok(rooms);
         }
-
-        [HttpPut]
-        public ActionResult InPut([FromBody] Temp temp)
-        {
-            var t = temp.Text;
-
-            return Ok();
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-    }
-
-    public class Temp {
-        public string Text { get; set; }
     }
 }

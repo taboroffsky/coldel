@@ -20,7 +20,7 @@ namespace coldel.Controllers
             _repository = repository;
         }
 
-        // GET api/values
+        // GET api/registrations
         [HttpGet]
         public ActionResult<IEnumerable<RegistrationDTO>> Get()
         {
@@ -28,7 +28,7 @@ namespace coldel.Controllers
             return  Ok(registrations);
         }
 
-        //GET api/addsample
+        // GET api/addsample
         [HttpGet("~/api/addsample")]
         public ActionResult<AddRegistrationResource> GetAddRegistrationResourceSample()
         {
@@ -45,25 +45,31 @@ namespace coldel.Controllers
             return Ok(sample);
         }
 
+        // POST /api/registrations
         [HttpPost]
-        public ActionResult<Registration> Add([FromBody] AddRegistrationResource resource)
+        public ActionResult<RegistrationDTO> Add([FromBody] AddRegistrationResource resource)
         {
             var client = _repository.GetOrAddClient(resource.ClientName, resource.Phone);
+            var room = _repository.GetRoom(resource.RoomId);
 
             var reg = new Registration()
             {
                 Id = new Guid(),
                 ClientId = client.Id,
-                RoomId = resource.RoomId,
+                Client = client,
+                RoomId = room.Id,
+                Room = room,
                 CheckInDate = resource.Start,
                 CheckOutDate = resource.End
             };
 
             _repository.AddRegistation(reg);
 
-            return Ok(reg);
+            return Ok(new RegistrationDTO(reg));
         }
 
+
+        // PUT /api/registrations
         [HttpPut]
         public ActionResult Edit([FromBody] AddRegistrationResource resource)
         {
@@ -77,6 +83,15 @@ namespace coldel.Controllers
             reg.CheckOutDate = resource.End;
 
             _repository.SaveChanges();
+
+            return Ok();
+        }
+
+        // DELETE /api/registrations
+        [HttpDelete]
+        public ActionResult Delete([FromBody] DeleteRegistrationResource resource)
+        {
+            _repository.DeleteRegistration(resource.Id);
 
             return Ok();
         }
