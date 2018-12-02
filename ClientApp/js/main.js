@@ -4,6 +4,8 @@ $(document).ready(function () {
     var registrationsUri = baseUri + "registrations";
     var roomsUri = baseUri + "rooms";
 
+    var eventId;
+
 
     $.getJSON(registrationsUri, function(data) {
         for (let booking of data) {
@@ -24,28 +26,49 @@ $(document).ready(function () {
         var end = $('#end').val();
 
         $.ajax({
-                url: registrationsUri,
-                type: 'post',
-                data: JSON.stringify({
-                    start: start,
-                    end: end,
-                    clientName: registrantName,
-                    phone: registrantPhone,
-                    roomId: room
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                success: function (registrationData) {
-                    $('#calendar').fullCalendar('renderEvent', registrationData, true); // stick? = true
-                    $('#calendar').fullCalendar('unselect');
-                },
-                error: function (response) {
-                    alert("Unknown error occured");
-                    $('#calendar').fullCalendar('unselect');
-                }
-            });
+            url: registrationsUri,
+            type: 'post',
+            data: JSON.stringify({
+                start: start,
+                end: end,
+                clientName: registrantName,
+                phone: registrantPhone,
+                roomId: room
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            success: function (registrationData) {
+                $('#calendar').fullCalendar('renderEvent', registrationData, true); // stick? = true
+                $('#calendar').fullCalendar('unselect');
+            },
+            error: function (response) {
+                alert("Unknown error occured");
+                $('#calendar').fullCalendar('unselect');
+            }
+        });
 
+    });
+
+    $('#deleteBtn').on('click', function(event) {
+        event.preventDefault(); // To prevent following the link (optional)
+
+        var recordId = $("#recordId").val();
+
+        $.ajax({
+            url: registrationsUri,
+            type: 'delete',
+            data: JSON.stringify({
+                id: recordId
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            success: function (respnse) {
+               $('#calendar').fullCalendar('removeEvents', [recordId] );
+            },
+            error: function (response) {}
+        });
     });
 
     $('#calendar').fullCalendar({
@@ -131,7 +154,8 @@ $(document).ready(function () {
             $(".modal-body" ).append("</ul>");
             $('#exampleModalCenter').modal('show'); 
         
-          },
+            $("#recordId").val(calEvent.id);
+        },
 
         eventDrop: function(event, delta, revertFunc) {
 
