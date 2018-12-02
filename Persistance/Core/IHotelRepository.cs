@@ -24,5 +24,7 @@ namespace coldel.Persistance.Core
         Client GetOrAddClient(string clientName, string phone);
 
         void AddRegistation(Registration registration);
+
+        void DeleteRegistration(Guid id);
     }
 }

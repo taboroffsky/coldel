@@ -23,6 +23,14 @@ namespace coldel.Persistance.Core
             _context.SaveChanges();
         }
 
+        public void DeleteRegistration(Guid id)
+        {
+            var registration = _context.Registrations.Find(id);
+            _context.Registrations.Remove(registration);
+
+            _context.SaveChanges();
+        }
+
         public Client GetOrAddClient(string clientName, string phone)
         {
             Client client;

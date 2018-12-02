@@ -38,11 +38,6 @@ namespace coldel
             services.AddScoped<IHotelRepository, HotelRepository>();
 
             services.AddDbContext<HotelDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
-
-            // services.Configure<ApiBehaviorOptions>(options =>
-            // {
-            //     options.SuppressModelStateInvalidFilter = true;
-            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
