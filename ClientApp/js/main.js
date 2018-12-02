@@ -54,9 +54,39 @@ $(document).ready(function () {
 
         eventClick: function(calEvent, jsEvent, view) {
             $('.modal-body').empty();
-            $(".modal-body" ).append( "<ul><li> Name: " + calEvent.title +"</li> <li>" + calEvent.title +"</li></ul>" );
+            $(".modal-body" ).append("<ul>");
+            $(".modal-body" ).append( "<li> Name: " + calEvent.title +"</li>" );
+            $(".modal-body" ).append("<li> Phone:" + calEvent.client.phone +"</li>");
+            $(".modal-body" ).append("<li> Room type:" + calEvent.room.roomType +"</li>");
+            $(".modal-body" ).append("<li> Room capacity:" + calEvent.room.capacity +"</li>");
+            $(".modal-body" ).append("<li> Room price:" + calEvent.room.price +"</li>");
+            $(".modal-body" ).append("<li> Start date:" + calEvent.start._d +"</li>");
+            $(".modal-body" ).append("<li> End date:" + calEvent.end._d +"</li>");
+            $(".modal-body" ).append("</ul>");
             $('#exampleModalCenter').modal('show'); 
         
+          },
+
+        eventDrop: function(event, delta, revertFunc) {
+
+            alert(event.title + " was dropped on " + event.start.format());
+        
+            if (!confirm("Are you sure about this change?")) {
+              revertFunc();
+            }
+            var data = {};
+            data.clientName = event.client.name;
+            data.phone = event.client.phone;
+            data.roomId = event.room.id,
+            data.registrationId = event.id,
+            data.start = event.start._d,
+            data.end = event.end._d
+            var json = JSON.stringify(data);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("PUT", url, true);
+            xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+            xhr.send(json);
           }
 
     });
