@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using coldel.Persistance.Core;
 using coldel.Persistance.Models;
 using coldel.Persistance.Models.DTOS;
@@ -36,6 +37,7 @@ namespace coldel.Controllers
                 ClientName = "Bob Cobich",
                 Phone = "67843298",
                 RoomId = new Guid(),
+                RegistrationId = new Guid(),
                 Start = DateTime.Now,
                 End = DateTime.Now
             };
@@ -60,6 +62,23 @@ namespace coldel.Controllers
             _repository.AddRegistation(reg);
 
             return Ok(reg);
+        }
+
+        [HttpPut]
+        public ActionResult Edit([FromBody] AddRegistrationResource resource)
+        {
+            var reg = _repository.GetRegistration(resource.RegistrationId);
+
+            var client = _repository.GetOrAddClient(resource.ClientName, resource.Phone);
+
+            reg.ClientId = client.Id;
+            reg.RoomId = resource.RoomId;
+            reg.CheckInDate = resource.Start;
+            reg.CheckOutDate = resource.End;
+
+            _repository.SaveChanges();
+
+            return Ok();
         }
     }
 }

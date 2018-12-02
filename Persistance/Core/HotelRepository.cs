@@ -66,7 +66,7 @@ namespace coldel.Persistance.Core
 
             remainingRooms.ForEach(r => dictionary.TryAdd($"{r.RoomType}.{r.Capacity}", r));
 
-            return dictionary.Values;
+            return dictionary.Values.OrderBy(r => r.Capacity).ToList();
         }
 
         public IEnumerable<RoomDTO> GetRooms()
@@ -74,9 +74,19 @@ namespace coldel.Persistance.Core
             return _context.Rooms.Select(r => new RoomDTO(r)).ToList();
         }
 
-        public Task SaveChangesAsync()
+        public void SaveChanges()
         {
-            return _context.SaveChangesAsync();
+             _context.SaveChanges();
+        }
+
+        public Registration GetRegistration(Guid id)
+        {
+            return _context.Registrations.Find(id);
+        }
+
+        public Room GetRoom(Guid id)
+        {
+            return _context.Rooms.Find(id);
         }
     }
 }

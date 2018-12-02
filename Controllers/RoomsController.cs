@@ -28,8 +28,8 @@ namespace coldel.Controllers
             return  Ok(rooms);
         }
 
-        // POST api/values
-        // Returns number of unique pairs combinations (room tuype-capacity) for a specific date.
+        // POST api/rooms
+        // Returns number of unique pairs combinations (room type-capacity) for a specific date.
         [HttpPost]
         public ActionResult<IEnumerable<RoomDTO>> Post([FromBody] GetRoomTypesResource resource)
         {
@@ -38,10 +38,12 @@ namespace coldel.Controllers
             return Ok(rooms);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public ActionResult InPut([FromBody] Temp temp)
         {
+            var t = temp.Text;
+
+            return Ok();
         }
 
         // DELETE api/values/5
@@ -49,5 +51,9 @@ namespace coldel.Controllers
         public void Delete(int id)
         {
         }
+    }
+
+    public class Temp {
+        public string Text { get; set; }
     }
 }

@@ -21,10 +21,10 @@ namespace coldel
     {
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
+            var builder = new ConfigurationBuilder()
+               .SetBasePath(env.ContentRootPath)
+               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+               .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
@@ -39,6 +39,10 @@ namespace coldel
 
             services.AddDbContext<HotelDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
+            // services.Configure<ApiBehaviorOptions>(options =>
+            // {
+            //     options.SuppressModelStateInvalidFilter = true;
+            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +57,13 @@ namespace coldel
                 app.UseHsts();
             }
 
-            app.UseCors(builder => builder.WithOrigins("*"));
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("*");
+                builder.WithMethods("*");
+                builder.WithHeaders("*");
+                builder.WithExposedHeaders("*");
+            });
             app.UseHttpsRedirection();
             app.UseMvc();
         }

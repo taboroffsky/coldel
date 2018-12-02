@@ -9,11 +9,15 @@ namespace coldel.Persistance.Core
 {
     public interface IHotelRepository
     {
-        Task SaveChangesAsync();
+        void SaveChanges();
+
+        Room GetRoom(Guid id);
 
         IEnumerable<RoomDTO> GetRooms();
 
         IEnumerable<RoomDTO> GetRoomTypes(GetRoomTypesResource resource);
+
+        Registration GetRegistration(Guid id);
 
         IEnumerable<RegistrationDTO> GetRegistrations();
 

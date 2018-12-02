@@ -10,6 +10,8 @@ namespace coldel.Resources
 
         public Guid RoomId { get; set; }
 
+        public Guid RegistrationId { get; set; }
+
         public DateTime Start { get; set; }
 
         public DateTime End { get; set; }
