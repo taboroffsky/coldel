@@ -37,7 +37,6 @@ $(document).ready(function () {
                     "Content-Type": "application/json"
                 },
                 success: function (registrationData) {
-                    debugger;
                     $('#calendar').fullCalendar('renderEvent', registrationData, true); // stick? = true
                     $('#calendar').fullCalendar('unselect');
                 },
