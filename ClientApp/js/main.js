@@ -54,7 +54,6 @@ $(document).ready(function () {
         event.preventDefault(); // To prevent following the link (optional)
 
         var recordId = $("#recordId").val();
-
         $.ajax({
             url: registrationsUri,
             type: 'delete',
@@ -157,6 +156,8 @@ $(document).ready(function () {
             $(".modal-body").append("</ul>");
             $(".modal-body").append("<div class='text-right'>Total price: " + ( diffDays * calEvent.room.price) + "</div>");
             $('#exampleModalCenter').modal('show');
+
+            $("#recordId").val(calEvent.id);
 
         },
 
