@@ -5,14 +5,14 @@ $(document).ready(function () {
     var roomsUri = baseUri + "rooms";
 
 
-    $.getJSON(registrationsUri, function(data) {
+    $.getJSON(registrationsUri, function (data) {
         for (let booking of data) {
             booking.allDay = true;
         }
-        $('#calendar').fullCalendar('addEventSource', data); 
+        $('#calendar').fullCalendar('addEventSource', data);
     });
 
-    $('#createNewRegistrant').on('click', function(event) {
+    $('#createNewRegistrant').on('click', function (event) {
         event.preventDefault(); // To prevent following the link (optional)
 
         var registrantName = $('#name').val();
@@ -24,40 +24,41 @@ $(document).ready(function () {
         var end = $('#end').val();
 
         $.ajax({
-                url: registrationsUri,
-                type: 'post',
-                data: JSON.stringify({
-                    start: start,
-                    end: end,
-                    clientName: registrantName,
-                    phone: registrantPhone,
-                    roomId: room
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                success: function (registrationData) {
-                    $('#calendar').fullCalendar('renderEvent', registrationData, true); // stick? = true
-                    $('#calendar').fullCalendar('unselect');
-                },
-                error: function (response) {
-                    alert("Unknown error occured");
-                    $('#calendar').fullCalendar('unselect');
-                }
-            });
+            url: registrationsUri,
+            type: 'post',
+            data: JSON.stringify({
+                start: start,
+                end: end,
+                clientName: registrantName,
+                phone: registrantPhone,
+                roomId: room
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            success: function (registrationData) {
+                $('#calendar').fullCalendar('renderEvent', registrationData, true); // stick? = true
+                $('#calendar').fullCalendar('unselect');
+            },
+            error: function (response) {
+                alert("Unknown error occured");
+                $('#calendar').fullCalendar('unselect');
+            }
+        });
 
     });
 
     $('#calendar').fullCalendar({
+        themeSystem: 'bootstrap4',
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,listWeek'
+            right: 'month,listWeek'
         },
         defaultDate: new Date().toDateString(),
         navLinks: true, // can click day/week names to navigate views
 
-        weekNumbers: true,
+        height: 910,
         weekNumbersWithinDays: true,
         weekNumberCalculation: 'ISO',
         selectable: true,
@@ -117,29 +118,31 @@ $(document).ready(function () {
 
         editable: true,
         eventLimit: true, // allow "more" link when too many events
-        
-        eventClick: function(calEvent, jsEvent, view) {
+
+        eventClick: function (calEvent, jsEvent, view) {
+            var timeDiff = Math.abs(new Date(calEvent.end).getTime() - new Date(calEvent.start).getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
             $('.modal-body').empty();
-            $(".modal-body" ).append("<ul>");
-            $(".modal-body" ).append("<li> Name: " + calEvent.title +"</li>" );
-            $(".modal-body" ).append("<li> Phone: " + calEvent.client.phone +"</li>");
-            $(".modal-body" ).append("<li> Room type: " + calEvent.room.roomType +"</li>");
-            $(".modal-body" ).append("<li> Beds: " + calEvent.room.capacity +"</li>");
-            $(".modal-body" ).append("<li> Room price: " + calEvent.room.price +"</li>");
-            $(".modal-body" ).append("<li> Start date: " + calEvent.start._d +"</li>");
-            $(".modal-body" ).append("<li> End date: " + calEvent.end._d +"</li>");
-            $(".modal-body" ).append("</ul>");
-            $('#exampleModalCenter').modal('show'); 
-        
-          },
+            $(".modal-body").append("<ul>");
+            $(".modal-body").append("<li> Name: " + calEvent.title + "</li>");
+            $(".modal-body").append("<li> Phone: " + calEvent.client.phone + "</li>");
+            $(".modal-body").append("<li> Room type: " + calEvent.room.roomType + "</li>");
+            $(".modal-body").append("<li> Beds: " + calEvent.room.capacity + "</li>");
+            $(".modal-body").append("<li> Room price: " + calEvent.room.price + "</li>");
+            $(".modal-body").append("<li> Start date: " + calEvent.start.format() + "</li>");
+            $(".modal-body").append("<li> End date: " + calEvent.end.format() + "</li>");
+            $(".modal-body").append("</ul>");
+            $(".modal-body").append("<div class='text-right'>Total price: " + ( diffDays * calEvent.room.price) + "</div>");
+            $('#exampleModalCenter').modal('show');
 
-        eventDrop: function(event, delta, revertFunc) {
+        },
 
-            alert(event.title + " was dropped on " + event.start.format());
-        
-            if (!confirm("Are you sure about this change?")) {
-              revertFunc();
-            }
+        eventDrop: function (event, delta, revertFunc) {
+
+            $('#dragModal').modal('show');
+            $("#discardChanges").click(function () {
+                revertFunc();
+            });
             var data = {};
             data.clientName = event.client.name;
             data.phone = event.client.phone;
@@ -151,9 +154,9 @@ $(document).ready(function () {
 
             var xhr = new XMLHttpRequest();
             xhr.open("PUT", registrationsUri, true);
-            xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
             xhr.send(json);
-          }
+        }
 
     });
 
