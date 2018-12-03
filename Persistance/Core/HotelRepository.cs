@@ -34,7 +34,7 @@ namespace coldel.Persistance.Core
         public Client GetOrAddClient(string clientName, string phone)
         {
             Client client;
-            client = _context.Clients.FirstOrDefault(cl => cl.Name == clientName && cl.Phone == cl.Phone);
+            client = _context.Clients.FirstOrDefault(cl => cl.Name == clientName && cl.Phone == phone);
 
             if (client != null)
             {
@@ -51,7 +51,7 @@ namespace coldel.Persistance.Core
             _context.Add(client);
             _context.SaveChanges();
 
-            return client;            
+            return client;
         }
 
         public IEnumerable<RegistrationDTO> GetRegistrations()

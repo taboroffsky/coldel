@@ -4,6 +4,8 @@ $(document).ready(function () {
     var registrationsUri = baseUri + "registrations";
     var roomsUri = baseUri + "rooms";
 
+    var eventId;
+
 
     $.getJSON(registrationsUri, function (data) {
         for (let booking of data) {
@@ -46,6 +48,27 @@ $(document).ready(function () {
             }
         });
 
+    });
+
+    $('#deleteBtn').on('click', function(event) {
+        event.preventDefault(); // To prevent following the link (optional)
+
+        var recordId = $("#recordId").val();
+
+        $.ajax({
+            url: registrationsUri,
+            type: 'delete',
+            data: JSON.stringify({
+                id: recordId
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            success: function (respnse) {
+               $('#calendar').fullCalendar('removeEvents', [recordId] );
+            },
+            error: function (response) {}
+        });
     });
 
     $('#calendar').fullCalendar({
@@ -143,6 +166,7 @@ $(document).ready(function () {
             $("#discardChanges").click(function () {
                 revertFunc();
             });
+
             var data = {};
             data.clientName = event.client.name;
             data.phone = event.client.phone;
