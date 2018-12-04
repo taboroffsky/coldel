@@ -24,6 +24,49 @@
 
   <div id='calendar'></div>
 
+  <div class="modal fade" id="modalChange" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-changes">
+          <form>
+            <div class="col-5">
+              <div class="form-group">
+                <label for="nameEdit">Name</label>
+                <input type="text" class="form-control" id="nameEdit" placeholder="Name" required>
+              </div>
+              <div class="form-group">
+                <label for="phoneEdit">Phone</label>
+                <input type="text" class="form-control" id="phoneEdit" placeholder="Number" required>
+              </div>
+              <div class="form-group">
+                <label for="sel1Edit">Room</label>
+                <select class="form-control" id="sel1Edit"></select>
+              </div>
+              <div class="form-group">
+                <label for="startEdit">Start</label>
+                <input id="startEdit" type="date">
+              </div>
+              <div class="form-group">
+                <label for="endEdit">End</label>
+                <input id="endEdit" type="date">
+              </div>
+            </div>
+        </div>
+        <input id="recordId" type="hidden">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="backBtn" data-dismiss="modal">Back</button>
+          <button type="button" class="btn btn-info" id="confirmChanges" data-dismiss="modal">Confrim Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -37,7 +80,7 @@
         </div>
         <input id="recordId" type="hidden">
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="editBtn">Edit</button>
           <button type="button" class="btn btn-danger" id="deleteBtn" data-dismiss="modal">Delete</button>
         </div>
       </div>
