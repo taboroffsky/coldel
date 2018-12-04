@@ -71,20 +71,23 @@ namespace coldel.Controllers
 
         // PUT /api/registrations
         [HttpPut]
-        public ActionResult Edit([FromBody] AddRegistrationResource resource)
+        public ActionResult<RegistrationDTO> Edit([FromBody] AddRegistrationResource resource)
         {
             var reg = _repository.GetRegistration(resource.RegistrationId);
 
             var client = _repository.GetOrAddClient(resource.ClientName, resource.Phone);
 
+            var room = _repository.GetRoom(resource.RoomId);
+
             reg.ClientId = client.Id;
             reg.RoomId = resource.RoomId;
+            reg.Room = room;
             reg.CheckInDate = resource.Start;
             reg.CheckOutDate = resource.End;
 
             _repository.SaveChanges();
 
-            return Ok();
+            return Ok(new RegistrationDTO(reg));
         }
 
         // DELETE /api/registrations
